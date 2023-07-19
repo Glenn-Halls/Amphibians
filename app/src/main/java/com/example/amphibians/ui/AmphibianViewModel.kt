@@ -4,7 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.amphibians.data.AmphibianRepository
 import com.example.amphibians.model.Amphibian
 import kotlinx.coroutines.launch
@@ -35,6 +39,16 @@ class AmphibianViewModel(private val amphibianRepository: AmphibianRepository) :
                 AppUiState.Error
             } catch (e: HttpException) {
                 AppUiState.Error
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as AmphibiansApplication)
+                val amphibianRepository = application.container.amphibianRepository
+                AmphibianViewModel(amphibianRepository = amphibianRepository)
             }
         }
     }
