@@ -1,4 +1,4 @@
-package com.example.amphibians
+package com.example.amphibians.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.amphibians.AmphibiansApplication
 import com.example.amphibians.data.AmphibianRepository
 import com.example.amphibians.model.Amphibian
 import kotlinx.coroutines.launch
@@ -17,8 +18,8 @@ import java.io.IOException
 
 sealed interface AppUiState {
     data class Success(val amphibianList: List<Amphibian>) : AppUiState
-    object Error: AppUiState
-    object Loading: AppUiState
+    object Error : AppUiState
+    object Loading : AppUiState
 }
 
 class AmphibianViewModel(private val amphibianRepository: AmphibianRepository) : ViewModel() {
